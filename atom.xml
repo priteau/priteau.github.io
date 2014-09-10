@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Pierre Riteau]]></title>
+  <link href="http://www.pierreriteau.name/atom.xml" rel="self"/>
+  <link href="http://www.pierreriteau.name/"/>
+  <updated>2014-09-10T09:55:36+01:00</updated>
+  <id>http://www.pierreriteau.name/</id>
+  <author>
+    <name><![CDATA[Pierre Riteau]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[OS X Lion Upgrade Woes]]></title>
+    <link href="http://www.pierreriteau.name/blog/2011/12/06/os-x-lion-upgrade-woes/"/>
+    <updated>2011-12-06T23:45:00+00:00</updated>
+    <id>http://www.pierreriteau.name/blog/2011/12/06/os-x-lion-upgrade-woes</id>
+    <content type="html"><![CDATA[<p>I recently upgraded my Snow Leopard system to Lion.
+The installation of the new operating system itself went well.
+However, I discovered a few issues once I started using Lion.</p>
+
+<p>The first issue appeared after I installed Xcode 4 through the App Store.
+My iPhone 4 would not synchronize with my Mac anymore: the device did not show up in iTunes or in iPhoto.
+Console.app was showing the following message:</p>
+
+<pre><code>posix_spawn(“/System/Library/PrivateFrameworks/MobileDevice.framework/Versions/A/Resources/usbmuxd”, …): No such file or directory
+</code></pre>
+
+<p>Indeed, the Resources directory was almost empty and missing the precious usbmuxd file.
+The <em>solution</em> for this problem was to <a href="http://chibimagic.wordpress.com/2010/11/21/posix_spawnsystemlibraryprivateframeworksmobiledevice-frameworkversionsaresourcesusbmuxd-no-such-file-or-directory/">reinstall Xcode</a> (run <code>/Applications/Install Xcode.app</code> again).</p>
+
+<p>The second issue was related to automatic proxy configuration.
+I use this feature to connect to a number of websites through a proxy at work, using a <a href="http://en.wikipedia.org/wiki/Proxy_auto-config">PAC file</a>.
+However, Safari in Lion would not go through the proxy, and accessed these websites directly instead.
+It turns out that this problem is caused by new sanboxing features of Lion.
+Safari was forbidden to read the file from my home directory!
+This problem is discussed on this <a href="https://discussions.apple.com/message/15707159#15707159">Apple Support Communities thread</a>.
+One proposed solution is to host the file on a web server and use an <code>http://</code> URL instead of a <code>file://</code> one.
+However, there is a <a href="https://discussions.apple.com/message/16106081#16106081">better solution</a> that does not rely on having a web server running: storing the PAC file in a directory white-listed for the Safari sandbox.
+I copied my PAC file to <code>/Library/Internet Plug-Ins/</code> and updated its URL in the Proxies tab of the Network System Preferences: problem solved!</p>
+]]></content>
+  </entry>
+  
+</feed>
